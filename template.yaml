@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Epic Page Downloader
+
+Globals:
+  Function:
+    Timeout: 30
+    Environment:
+      Variables:
+        DI_PROFILE_ACTIVES:
+        LOG_LEVEL:
+        SELENIUM_REMOTE_SERVER:
+    ReservedConcurrentExecutions: 300
+
+Resources:
+  Function:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Image
+      FunctionName: 'epic-page-downloader'
+      Events:
+        myApi:
+          Type: HttpApi
+          Properties:
+            Path: /{proxy+}
+            Method: ANY
+    Metadata:
+      Dockerfile: Dockerfile.aws.lambda.brightdata
+      DockerContext: ./app
+      DockerTag: latest

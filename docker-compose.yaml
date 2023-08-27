@@ -1,0 +1,16 @@
+version: "3.4"
+
+services:
+  lightsail:
+    build:
+      context: ./app
+      dockerfile: Dockerfile.aws.lightsail
+    container_name: epic-page-downloader-api
+    environment:
+      - DI_PROFILE_ACTIVES=
+      - LOG_LEVEL=DEBUG
+      - SELENIUM_REMOTE_SERVER=
+    volumes:
+      - ./app:/app/
+    ports:
+      - "8000:8000"

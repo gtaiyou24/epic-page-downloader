@@ -1,0 +1,17 @@
+# FastAPI
+fastapi==0.103.0
+uvicorn==0.23.2
+# AWS Lambda
+mangum==0.17.0
+# DI
+di4injector==0.0.1
+# BeautifulSoup
+beautifulsoup4==4.12.2
+lxml==4.9.3
+# Browse
+selenium==4.11.2
+requests==2.31.0
+# Log
+slf4py==0.0.2
+# User Agent
+random-user-agent==1.0.1
