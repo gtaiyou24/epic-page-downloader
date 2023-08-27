@@ -2,7 +2,7 @@
 
 ## How to
 
-<details><summary>start docker</summary>
+<details><summary>start Docker</summary>
 
 ```bash
 docker-compose up --build

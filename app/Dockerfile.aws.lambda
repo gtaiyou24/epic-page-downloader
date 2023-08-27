@@ -1,0 +1,26 @@
+FROM public.ecr.aws/lambda/python:3.11 as layer
+
+# serverlesss-chromeとchromedriverのバージョンを合わせる
+# NOTE : https://github.com/adieuadieu/serverless-chrome/releases
+RUN yum install -y unzip && \
+    curl -SL https://chromedriver.storage.googleapis.com/86.0.4240.22/chromedriver_linux64.zip > /tmp/chromedriver.zip && \
+    curl -SL https://github.com/adieuadieu/serverless-chrome/releases/download/v1.0.0-57/stable-headless-chromium-amazonlinux-2.zip > /tmp/headless-chromium.zip && \
+    unzip /tmp/chromedriver.zip -d /opt/ && \
+    unzip /tmp/headless-chromium.zip -d /opt/
+
+FROM --platform=linux/amd64 public.ecr.aws/lambda/python:3.11
+
+ENV TZ=Asia/Tokyo
+
+# driverのバイナリ等を /opt 配下にコピー(lambdaでの処理実行時に /tmp にコピーする)
+COPY --from=layer /opt/headless-chromium /opt/
+COPY --from=layer /opt/chromedriver /opt/
+
+COPY . ./
+
+RUN yum install -y https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm && \
+    pip install --upgrade pip && pip install -r requirements.txt
+
+ENV DISPLAY=:0.0
+
+CMD ["start_app.handler"]

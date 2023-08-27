@@ -1,1 +1,0 @@
-from .requests_html_adapter import RequestsHtmlAdapter

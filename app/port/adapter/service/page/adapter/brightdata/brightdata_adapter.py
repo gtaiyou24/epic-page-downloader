@@ -17,9 +17,6 @@ class BrightDataAdapter(PageAdapter):
     def __init__(self):
         self.__remote_connection = ChromiumRemoteConnection(os.getenv('SELENIUM_REMOTE_SERVER'), 'goog', 'chrome')
         self.__options = ChromeOptions()
-        self.__options.add_argument('--blink-settings=imagesEnabled=false')  # 画像を読み込まない
-        # 通知を無効化
-        self.__options.add_experimental_option('prefs', "'profile.default_content_setting_values.notifications': 2")
 
     def download(self, url: URL, user_agent: UserAgent) -> Page:
         self.__options.add_argument(f'--user-agent={user_agent.value}')
